@@ -1,10 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { EmissionService } from '../../services/emission.service';
 import { Emission } from '../../models/emission.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NamedEntity } from '../../models/named-entity.model';
+
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexXAxis,
+  ApexStroke,
+  ApexDataLabels,
+  ApexTitleSubtitle,
+  ApexLegend,
+  ApexGrid,
+  ApexTooltip,
+  NgApexchartsModule
+} from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -16,6 +28,7 @@ export type ChartOptions = {
   legend: ApexLegend;
   grid: ApexGrid;
   tooltip?: ApexTooltip;
+  responsive?: ApexResponsive[]; // <-- agregamos esto
 };
 
 @Component({
@@ -37,18 +50,24 @@ export class EmissionList implements OnInit {
 
   chartOptions: ChartOptions = {
     series: [],
-    chart: { type: 'line', height: 350, toolbar: { show: true } },
+    chart: { type: 'line' as const, height: 350, toolbar: { show: true } },
     dataLabels: { enabled: false },
     stroke: { curve: 'smooth' },
     title: { text: 'Historical Emissions', align: 'left' },
-    xaxis: { categories: [] },
+    xaxis: {
+      categories: [],
+      labels: { rotate: -45, hideOverlappingLabels: true }
+    },
     legend: { position: 'top' },
     grid: { borderColor: '#f1f1f1' },
-    tooltip: {
-      y: {
-        formatter: (val: number) => val.toFixed(2)
+    tooltip: { y: { formatter: (val: number) => val.toFixed(2) } },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: { height: 300 },
+        xaxis: { tickAmount: 5 }
       }
-    }
+    }]
   };
 
   constructor(private emissionService: EmissionService) {}
