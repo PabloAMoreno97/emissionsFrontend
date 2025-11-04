@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmissionService } from '../../services/emission.service';
 import { Emission } from '../../models/emission.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NamedEntity } from '../../models/named-entity.model';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 
 import {
   ApexAxisChartSeries,
@@ -34,14 +36,21 @@ export type ChartOptions = {
 @Component({
   selector: 'app-emission-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgApexchartsModule],
+  imports: [CommonModule, FormsModule, NgApexchartsModule, MatPaginatorModule],
   templateUrl: './emission-list.html',
 })
 export class EmissionList implements OnInit {
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   emissions: Emission[] = [];
   countries: NamedEntity[] = [];
   activities: NamedEntity[] = [];
   emissionTypes: NamedEntity[] = [];
+
+  pagedEmissions: Emission[] = [];
+  pageSize = 10;
+  pageIndex = 0;
 
   selectedCountry = '';
   selectedActivity = '';
@@ -93,7 +102,10 @@ export class EmissionList implements OnInit {
     }).subscribe({
       next: (data: Emission[]) => {
         this.emissions = data;
+        this.pageIndex = 0;
+        if (this.paginator) this.paginator.firstPage();
         this.updateChart();
+        this.updatePagedData();
         this.isLoading = false;
       },
       error: (err) => {
@@ -133,4 +145,17 @@ export class EmissionList implements OnInit {
 
     this.chartOptions = { ...this.chartOptions, series, xaxis: { categories: years } };
   }
+
+  updatePagedData() {
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedEmissions = this.emissions.slice(start, end);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.updatePagedData();
+  }
+
 }
