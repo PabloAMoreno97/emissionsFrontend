@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EmissionList } from './emission-list';
+import { EmissionService } from '../../services/emission.service';
 
 describe('EmissionList', () => {
   let component: EmissionList;
@@ -8,16 +9,16 @@ describe('EmissionList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmissionList]
-    })
-    .compileComponents();
+      imports: [EmissionList, HttpClientTestingModule],
+      providers: [EmissionService]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EmissionList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 });
