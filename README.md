@@ -1,6 +1,6 @@
 # Emissions App – Frontend
 
-This project is the frontend interface for the Emissions App, developed with Angular.
+This project is the frontend interface for the **Emissions App**, developed with Angular.
 
 It provides an interactive dashboard to visualize, filter, and analyze emissions data by country, activity, and emission type.
 
@@ -14,7 +14,7 @@ ng serve
 
 Once the server starts, open your browser and go to:
 
-http://localhost:4200/
+*http://localhost:4200/*
 
 
 The application will automatically reload when source files are modified.
@@ -46,7 +46,7 @@ docker run -d --name emissions-frontend -p 80:80 emissions-frontend
 
 After the container starts, open your browser and navigate to:
 
-http://localhost/
+*http://localhost/*
 
 
 ### 2.3 Stopping and Removing the Container
@@ -90,12 +90,10 @@ src/
  └── index.html              # Main entry point
 ```
 
-5. Prerequisites
+## 5. Prerequisites
 
 Before running or building the project, ensure that you have the following installed:
 
-Node.js (version 18 or higher)
-
-Angular CLI (version 17 or higher)
-
-Docker (optional, for containerized execution)
+- **Node.js** (version 18 or higher)
+- **Angular CLI** (version 17 or higher)
+- **Docker** (optional, for containerized execution)
