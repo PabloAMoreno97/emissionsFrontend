@@ -17,6 +17,11 @@ git clone https://github.com/PabloAMoreno97/emissionsFrontend.git
 git clone git@github.com:PabloAMoreno97/emissionsFrontend.git
 ```
 
+Move to the project path:
+```
+cd emissionsFrontend
+```
+
 ## 2. Running the Application with Angular CLI
 
 ### 2.1 Installation and Setup:
